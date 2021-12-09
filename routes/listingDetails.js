@@ -5,11 +5,12 @@ const ListingDetails = require('../models/listingDetails');
 router.post('/add/listing', async (req, res) => {
   try {
     let listingDetails = new ListingDetails({
+      user: req.body.userId,
       kind: req.body.kind,
       type: req.body.type,
       streetAddress: req.body.streetAddress,
       location: req.body.location,
-      city: req.body.city,
+      city: req.body.city.toLowerCase(),
       country: req.body.country,
       phone: req.body.phone,
       rentalPeriod: req.body.rentalPeriod,
@@ -39,6 +40,44 @@ router.post('/add/listing', async (req, res) => {
       status: true,
       message: 'Successfully created a new Listing',
       info: listingDetails,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+});
+
+router.get('/listings/:userId', async (req, res) => {
+  try {
+    let searchResults = await ListingDetails.find({
+      user: req.params.userId,
+    }).populate('user');
+
+    //sending response i.e status of the request and the data(products)
+    res.json({
+      success: true,
+      searchResults: searchResults,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+});
+
+router.get('/search/listings/:searchQuery', async (req, res) => {
+  try {
+    let searchResults = await ListingDetails.find({
+      city: req.params.searchQuery.toLowerCase(),
+    });
+
+    //sending response i.e status of the request and the data(products)
+    res.json({
+      success: true,
+      searchResults: searchResults,
     });
   } catch (err) {
     res.status(500).json({
