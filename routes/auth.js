@@ -73,20 +73,25 @@ router.get('/auth/user', async (req, res) => {
 
 // Update a Profile
 
-router.put('/auth/user', verifyToken, async (req, res) => {
+router.put('/owners/:id', async (req, res) => {
   try {
-    let user = await User.findOne({ _id: req.decoded._id });
-    if (user) {
-      if (req.body.name) user.name = req.body.name;
-      if (req.body.email) user.email = req.body.email;
-      if (req.body.password) user.password = req.body.password;
-
-      user.save();
-      res.json({
-        success: true,
-        message: 'Successfully updated',
-      });
-    }
+    let updatedUser = await User.findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        $set: {
+          fName: req.body.fName,
+          lName: req.body.lName,
+        },
+      },
+      {
+        upsert: true, // this will create a new entry if it didn't find an existing one
+      }
+    );
+    //sending response i.e status of the request and the updated product
+    res.json({
+      success: true,
+      updatedUser: updatedUser,
+    });
   } catch (err) {
     res.status(500).json({
       success: false,

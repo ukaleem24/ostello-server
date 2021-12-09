@@ -39,6 +39,12 @@ const listingDetails = require('./routes/listingDetails');
 app.use('/api', userRoutes);
 app.use('/api', userInfoRoutes);
 app.use('/api', listingDetails);
+const temListRoutes = require('./routes/temList');
+const tempReviewRoutes = require('./routes/tempReview');
+app.use('/api', userRoutes);
+app.use('/api', userInfoRoutes);
+app.use('/api', temListRoutes);
+app.use('/api', tempReviewRoutes);
 
 // making images folder publically available
 

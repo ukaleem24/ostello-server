@@ -4,11 +4,10 @@ const upload = require('../middlewares/upload-photo');
 
 // POST request
 
-router.post('/user/info', upload.single('photo'), async (req, res) => {
+router.post('/user/info', async (req, res) => {
   try {
     let userInfo = new UserInfo({
       userId: req.body.userId,
-      photo: req.body.photo,
       dob: req.body.dob,
       gender: req.body.gender,
       city: req.body.city,
@@ -19,7 +18,7 @@ router.post('/user/info', upload.single('photo'), async (req, res) => {
     await userInfo.save();
 
     res.json({
-      status: true,
+      success: true,
       message: 'Successfully created a new UserInfo',
     });
   } catch (err) {
