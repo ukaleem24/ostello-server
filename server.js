@@ -34,6 +34,11 @@ app.use(cors());
 
 const userRoutes = require('./routes/auth');
 const userInfoRoutes = require('./routes/userInfo');
+const listingDetails = require('./routes/listingDetails');
+
+app.use('/api', userRoutes);
+app.use('/api', userInfoRoutes);
+app.use('/api', listingDetails);
 const temListRoutes = require('./routes/temList');
 const tempReviewRoutes = require('./routes/tempReview');
 app.use('/api', userRoutes);
