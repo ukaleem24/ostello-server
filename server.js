@@ -37,11 +37,12 @@ const userInfoRoutes = require('./routes/userInfo');
 const listingDetails = require('./routes/listingDetails');
 const temListRoutes = require('./routes/temList');
 const reviewRoutes = require('./routes/review');
-const bookingRoutes = require('./routes/review');
+const bookingRoutes = require('./routes/booking');
 
 app.use('/api', userRoutes);
 app.use('/api', userInfoRoutes);
 app.use('/api', listingDetails);
+app.use('/api', bookingRoutes);
 
 app.use('/api', temListRoutes);
 app.use('/api', reviewRoutes);

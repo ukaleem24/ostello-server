@@ -3,10 +3,10 @@ const Booking = require('../models/booking');
 
 // POST request
 
-router.post('/booking', async (req, res) => {
+router.post('/new/booking', async (req, res) => {
   try {
     let booking = new Booking({
-      lanlord: req.body.landlord,
+      landlord: req.body.landlord,
       tenant: req.body.tenant,
       listing: req.body.listing,
       moveIn: req.body.moveIn,
@@ -27,7 +27,7 @@ router.post('/booking', async (req, res) => {
 });
 
 //get booked properties  of a specific landlord:
-router.get('//booking/detail:id', async (req, res) => {
+router.get('/booking/detail:id', async (req, res) => {
   try {
     let bookings = await Booking.find({ landlord: req.params.id }).populate(
       'listing tenant'

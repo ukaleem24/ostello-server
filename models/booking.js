@@ -9,4 +9,4 @@ const bookingSchema = new Schema({
   moveOut: String,
 });
 
-module.exports = mongoose.model('UserInfo', userInfoSchema);
+module.exports = mongoose.model('Booking', bookingSchema);
