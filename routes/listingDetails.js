@@ -53,7 +53,7 @@ router.get('/listings/:userId', async (req, res) => {
   try {
     let searchResults = await ListingDetails.find({
       user: req.params.userId,
-    }).populate('user');
+    });
 
     //sending response i.e status of the request and the data(products)
     res.json({
@@ -86,4 +86,43 @@ router.get('/search/listings/:searchQuery', async (req, res) => {
     });
   }
 });
+
+router.get('/search/specific_listing/:searchQuery', async (req, res) => {
+  try {
+    let searchResults = await ListingDetails.find({
+      _id: req.params.searchQuery,
+    }).populate('user');
+
+    //sending response i.e status of the request and the data(products)
+    res.json({
+      success: true,
+      searchResults: searchResults,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+});
+router.delete('/delete/listing/:id', async (req, res) => {
+  try {
+    let deletedListing = await ListingDetails.findOneAndDelete({
+      _id: req.params.id,
+    });
+    if (deletedListing) {
+      res.json({
+        status: true,
+        message: 'Listing deleted successfully',
+      });
+    }
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+});
+
+module.exports = router;
 module.exports = router;

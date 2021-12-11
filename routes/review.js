@@ -1,13 +1,14 @@
 const router = require('express').Router();
-const TempReview = require('../models/tempReviews');
+const Review = require('../models/review');
 
 // POST request
 
-router.post('/testing/review', async (req, res) => {
+router.post('/listingdetail/review', async (req, res) => {
   try {
-    let review = new TempReview({
-      temList: req.body.temList,
+    let review = new Review({
       user: req.body.user,
+      listing: req.body.listing,
+      title: req.body.title,
       review: req.body.review,
       rating: req.body.rating,
     });
@@ -26,11 +27,11 @@ router.post('/testing/review', async (req, res) => {
   }
 });
 
-//get listing:
-router.get('/testing/review/:id', async (req, res) => {
+//get reviews:
+router.get('/listingdetail/review/:id', async (req, res) => {
   try {
-    let reviews = await TempReview.findOne({ temList: req.params.id }).populate(
-      'temList user'
+    let reviews = await Review.find({ listing: req.params.id }).populate(
+      'user'
     );
     console.log(reviews);
     //sending response i.e status of the request and the data(products)
