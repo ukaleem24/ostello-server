@@ -4,11 +4,11 @@ const upload = require('../middlewares/upload-photo');
 
 // POST request
 
-router.post('/user/info', async (req, res) => {
+router.post('/user/info', upload.single('photo'), async (req, res) => {
   try {
     let userInfo = new UserInfo({
       userId: req.body.userId,
-      // photo: req.file.path,
+      photo: req.file.path,
       dob: req.body.dob,
       gender: req.body.gender,
       city: req.body.city,
@@ -40,7 +40,7 @@ router.post('/user/info', async (req, res) => {
     });
   }
 });
-module.exports = router;
+
 // // GET request - to get all the owner
 
 // router.get('/owners', async (req, res) => {
@@ -61,24 +61,24 @@ module.exports = router;
 
 // //
 
-// // GET request- get only a single product
+// GET request- get only a single product
 
-// router.get('/owners/:id', async (req, res) => {
-//   try {
-//     let owner = await Owner.findOne({ _id: req.params.id });
+router.get('/user/info/:id', async (req, res) => {
+  try {
+    let userinfo = await UserInfo.findOne({ userId: req.params.id });
 
-//     //sending response i.e status of the request and the data
-//     res.json({
-//       success: true,
-//       owner: owner,
-//     });
-//   } catch (err) {
-//     res.status(500).json({
-//       success: false,
-//       message: err.message,
-//     });
-//   }
-// });
+    //sending response i.e status of the request and the data
+    res.json({
+      success: true,
+      userinfo: userinfo,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+});
 
 // // PUT request- Update a single product
 
@@ -129,3 +129,4 @@ module.exports = router;
 //     });
 //   }
 // });
+module.exports = router;
