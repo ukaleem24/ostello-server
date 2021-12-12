@@ -38,14 +38,21 @@ const listingDetails = require('./routes/listingDetails');
 const temListRoutes = require('./routes/temList');
 const reviewRoutes = require('./routes/review');
 const bookingRoutes = require('./routes/booking');
+// const tempReviewRoutes = require('./routes/tempReview');
+const testPhotoRoute = require('./routes/testPhoto');
+
+const paymentRoute = require('./routes/payment');
 
 app.use('/api', userRoutes);
 app.use('/api', userInfoRoutes);
 app.use('/api', listingDetails);
 app.use('/api', bookingRoutes);
+app.use('/api', paymentRoute);
 
 app.use('/api', temListRoutes);
 app.use('/api', reviewRoutes);
+// app.use('/api', tempReviewRoutes);
+app.use('/api', testPhotoRoute);
 
 // making images folder publically available
 
