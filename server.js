@@ -36,8 +36,13 @@ const userRoutes = require('./routes/auth');
 const userInfoRoutes = require('./routes/userInfo');
 const listingDetails = require('./routes/listingDetails');
 const temListRoutes = require('./routes/temList');
+<<<<<<< Updated upstream
 const reviewRoutes = require('./routes/review');
 const bookingRoutes = require('./routes/booking');
+=======
+const tempReviewRoutes = require('./routes/tempReview');
+const testPhotoRoute = require('./routes/testPhoto');
+>>>>>>> Stashed changes
 
 app.use('/api', userRoutes);
 app.use('/api', userInfoRoutes);
@@ -45,7 +50,12 @@ app.use('/api', listingDetails);
 app.use('/api', bookingRoutes);
 
 app.use('/api', temListRoutes);
+<<<<<<< Updated upstream
 app.use('/api', reviewRoutes);
+=======
+app.use('/api', tempReviewRoutes);
+app.use('/api', testPhotoRoute);
+>>>>>>> Stashed changes
 
 // making images folder publically available
 
