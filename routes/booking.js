@@ -6,11 +6,11 @@ const Booking = require('../models/booking');
 router.post('/new/booking', async (req, res) => {
   try {
     let booking = new Booking({
-      landlord: req.body.landlord,
-      tenant: req.body.tenant,
-      listing: req.body.listing,
+      landlord: req.body.landlordId,
+      tenant: req.body.tenantId,
+      listing: req.body.listingId,
       moveIn: req.body.moveIn,
-      moveOut: req.body.moveOut,
+      description: req.body.description,
     });
     await booking.save();
 

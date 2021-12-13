@@ -6,7 +6,7 @@ const bookingSchema = new Schema({
   tenant: { type: Schema.Types.ObjectId, ref: 'User' },
   listing: { type: Schema.Types.ObjectId, ref: 'ListingDetails' },
   moveIn: String,
-  moveOut: String,
+  desciption: String,
 });
 
 module.exports = mongoose.model('Booking', bookingSchema);

@@ -31,6 +31,7 @@ router.post('/add/listing', async (req, res) => {
       basement: req.body.basement,
       furnished: req.body.furnished,
       averageRating: req.body.averageRating,
+      position: req.body.position,
     });
     console.log('Listing Details');
 

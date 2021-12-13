@@ -6,6 +6,7 @@ const path = require('path');
 router.post('/test/photo/:userId', upload.any('photo'), async (req, res) => {
   try {
     let photoPaths = [];
+    console.log(req.body.files);
     req.files.forEach((file) => {
       photoPaths.push(file.path);
     });
