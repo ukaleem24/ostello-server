@@ -1,14 +1,20 @@
 const router = require('express').Router();
 const UserInfo = require('../models/userInfo');
 const upload = require('../middlewares/upload-photo');
+const path = require('path');
 
 // POST request
 
-router.post('/user/info', upload.single('photo'), async (req, res) => {
+router.post('/user/info', upload.any('photo'), async (req, res) => {
   try {
+    let photoPaths = [];
+    req.files.forEach((file) => {
+      photoPaths.push(file.path);
+    });
+    console.log('photoPaths: ' + photoPaths);
     let userInfo = new UserInfo({
       userId: req.body.userId,
-      photo: req.file.path,
+      photo: photoPaths,
       dob: req.body.dob,
       gender: req.body.gender,
       city: req.body.city,
@@ -60,9 +66,6 @@ router.post('/user/info', upload.single('photo'), async (req, res) => {
 // });
 
 // //
-
-// GET request- get only a single product
-
 router.get('/user/info/:id', async (req, res) => {
   try {
     let userinfo = await UserInfo.findOne({ userId: req.params.id });
@@ -72,6 +75,25 @@ router.get('/user/info/:id', async (req, res) => {
       success: true,
       userinfo: userinfo,
     });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+});
+
+// GET request- get only a single product
+
+router.get('/user/info/image/:imageName', async (req, res) => {
+  try {
+    const dirname = path.resolve();
+    res.sendFile(dirname + '\\images\\' + req.params.imageName);
+    //sending response i.e status of the request and the data
+    // res.json({
+    //   success: true,
+    //   userinfo: userinfo,
+    // });
   } catch (err) {
     res.status(500).json({
       success: false,
