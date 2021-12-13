@@ -38,6 +38,8 @@ const listingDetails = require('./routes/listingDetails');
 const temListRoutes = require('./routes/temList');
 const reviewRoutes = require('./routes/review');
 const bookingRoutes = require('./routes/booking');
+const photoRoutes = require('./routes/photo');
+
 // const tempReviewRoutes = require('./routes/tempReview');
 const testPhotoRoute = require('./routes/testPhoto');
 
@@ -48,6 +50,7 @@ app.use('/api', userInfoRoutes);
 app.use('/api', listingDetails);
 app.use('/api', bookingRoutes);
 app.use('/api', paymentRoute);
+app.use('/api', photoRoutes);
 
 app.use('/api', temListRoutes);
 app.use('/api', reviewRoutes);
