@@ -37,9 +37,9 @@ const booking = require('../models/booking');
 //   });
 // });
 
-router.post('/payment', (req, res) => {
+router.post('/payment', async (req, res) => {
   let totalPrice1 = Math.round(req.body.totalPrice * 100);
-
+  console.log(req);
   stripe.customers
     .create({
       email: req.body.email,
@@ -77,6 +77,7 @@ router.post('/payment', (req, res) => {
 
       res.json({
         success: true,
+        res: req.body,
         message: 'Successfully made a payment',
       });
     })
