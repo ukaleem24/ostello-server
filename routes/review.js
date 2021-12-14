@@ -18,6 +18,7 @@ router.post('/listingdetail/review', async (req, res) => {
     res.json({
       success: true,
       message: 'Successfully created a new review',
+      review: review,
     });
   } catch (err) {
     res.status(500).json({
