@@ -2,7 +2,7 @@ const router = require('express').Router();
 // const moment = require('moment');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 // const Order = require('../models/order');
-const booking = require('../models/booking');
+const Booking = require('../models/booking');
 // const SHIPMENT = {
 //   normal: {
 //     price: 13.98,
@@ -38,12 +38,12 @@ const booking = require('../models/booking');
 // });
 
 router.post('/payment', async (req, res) => {
-  let totalPrice1 = Math.round(req.body.totalPrice * 100);
+  let totalPrice = Math.round(req.body.totalPrice * 100);
   console.log(req);
   stripe.customers
     .create({
       email: req.body.email,
-      description: 'lalalalaal',
+      name: req.body.name,
     })
     .then((customer) => {
       return stripe.customers.createSource(customer.id, {
@@ -53,8 +53,8 @@ router.post('/payment', async (req, res) => {
     .then((source) => {
       return stripe.charges
         .create({
-          amount: totalPrice1,
-          currency: 'aud',
+          amount: totalPrice,
+          currency: 'pkr',
           customer: source.customer,
         })
         .catch((msg) => {
@@ -62,7 +62,14 @@ router.post('/payment', async (req, res) => {
         });
     })
     .then(async (charge) => {
-      //   const order = new Order();
+      let updatePaymentStatus = await Booking.findOneAndUpdate(
+        { _id: req.body.bookingId },
+        {
+          $set: {
+            paymentStatus: 'completed',
+          },
+        }
+      );
       //   let cart = req.body.cart;
       //   cart.map((product) => {
       //     order.products.push({
@@ -77,7 +84,7 @@ router.post('/payment', async (req, res) => {
 
       res.json({
         success: true,
-        res: req.body,
+        res: updatePaymentStatus,
         message: 'Successfully made a payment',
       });
     })

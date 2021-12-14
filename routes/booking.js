@@ -65,6 +65,24 @@ router.get('/booking/details/tenant/:tenantId', async (req, res) => {
   }
 });
 
+router.get('/booking/details/:bookingId', async (req, res) => {
+  try {
+    let booking = await Booking.find({
+      _id: req.params.bookingId,
+    }).populate('listing tenant landlord');
+    //sending response i.e status of the request and the data(products)
+    res.json({
+      success: true,
+      booking: booking,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+});
+
 router.put('/booking/update/status/:id', async (req, res) => {
   try {
     let updateBookingStatus = await Booking.findOneAndUpdate(
