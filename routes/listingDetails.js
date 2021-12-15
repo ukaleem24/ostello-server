@@ -88,6 +88,23 @@ router.get('/search/listings/:searchQuery', async (req, res) => {
   }
 });
 
+//getting all listings
+router.get('/all/listings/', async (req, res) => {
+  try {
+    let searchResults = await ListingDetails.find();
+
+    //sending response i.e status of the request and the data(products)
+    res.json({
+      success: true,
+      listings: searchResults,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+});
 router.get('/search/specific_listing/:searchQuery', async (req, res) => {
   try {
     let searchResults = await ListingDetails.find({

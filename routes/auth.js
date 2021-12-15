@@ -71,6 +71,25 @@ router.get('/auth/user', async (req, res) => {
   }
 });
 
+//get all Users
+{
+  router.get('/auth/allusers', async (req, res) => {
+    try {
+      let users = await User.find();
+      if (users) {
+        res.json({
+          success: true,
+          users: users,
+        });
+      }
+    } catch (err) {
+      res.status(500).json({
+        success: false,
+        message: err.message,
+      });
+    }
+  });
+}
 // Update a Profile
 
 router.put('/owners/:id', async (req, res) => {
