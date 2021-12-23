@@ -88,6 +88,36 @@ router.get('/search/listings/:searchQuery', async (req, res) => {
   }
 });
 
+router.get(
+  '/search/filter/listings/:searchQuery/:category',
+  async (req, res) => {
+    try {
+      let searchResults;
+      if (req.params.category === 'all') {
+        searchResults = await ListingDetails.find({
+          city: req.params.searchQuery.toLowerCase(),
+        });
+      } else {
+        searchResults = await ListingDetails.find({
+          city: req.params.searchQuery.toLowerCase(),
+          type: String(req.params.category),
+        });
+      }
+
+      //sending response i.e status of the request and the data(products)
+      res.json({
+        success: true,
+        searchResults: searchResults,
+      });
+    } catch (err) {
+      res.status(500).json({
+        success: false,
+        message: err.message,
+      });
+    }
+  }
+);
+
 //getting all listings
 router.get('/all/listings/', async (req, res) => {
   try {
